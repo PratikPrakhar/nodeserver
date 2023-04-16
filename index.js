@@ -8,7 +8,7 @@ const PORT = 3000;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb://0.0.0.0:27017/mydatabase', {
+mongoose.connect('mongodb+srv://test123:test123@cluster0.p1liq0o.mongodb.net/test', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
