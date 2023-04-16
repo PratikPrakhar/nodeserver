@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>XYZ</title>
+</head>
+<style>
+	.toggle {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.toggle input {
+  display: none;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #f44336;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #4CAF50;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #4CAF50;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+.myButton {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 10px;
+  cursor: not-allowed;
+  opacity: 0.5;
+  box-shadow: 0 5px #3e8e41;
+  transition: all 0.3s ease-in-out;
+}
+
+.myButton:hover {
+  background-color: #3e8e41;
+  box-shadow: 0 7px #2b5e2d;
+  transform: translateY(-2px);
+}
+
+.myButton:active {
+  background-color: #4CAF50;
+  box-shadow: 0 2px #3e8e41;
+  transform: translateY(2px);
+}
+
+.myButton:enabled {
+  cursor: pointer;
+  opacity: 1.0;
+}
+
+.myButton1 {
+  background-color: #f44336;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 10px;
+  cursor: not-allowed;
+  opacity: 0.5;
+  box-shadow: 0 5px #d32f2f;
+  transition: all 0.3s ease-in-out;
+}
+
+.myButton1:hover {
+  background-color: #d32f2f;
+  box-shadow: 0 7px #b71c1c;
+  transform: translateY(-2px);
+}
+
+.myButton1:active {
+  background-color: #f44336;
+  box-shadow: 0 2px #d32f2f;
+  transform: translateY(2px);
+}
+
+.myButton1:enabled {
+  cursor: pointer;
+  opacity: 1.0;
+}
+
+</style>
+
+<body>
+   <p> <label class="toggle">
+    <input type="checkbox" id="toggleButton">
+    <span class="slider round"></span>
+</label></p>
+  <button id="1" onclick="handleButtonClick('1')" class="myButton" disabled>On</button>
+  <button id="0" onclick="handleButtonClick('0')" class="myButton1" disabled>Off</button>
+  <script>
+    const toggleButton = document.getElementById("toggleButton");
+const myButtons = document.getElementsByClassName("myButton");
+const myButtons1 = document.getElementsByClassName("myButton1");
+toggleButton.addEventListener("change", function() {
+  if (this.checked) {
+    for (let i = 0; i < myButtons.length; i++) {
+      myButtons[i].disabled = false;
+      myButtons1[i].disabled = false;
+    }
+  } else {
+    for (let i = 0; i < myButtons.length; i++) {
+      myButtons[i].disabled = true;
+      myButtons1[i].disabled = true;
+    }
+  }
+});
+    function handleButtonClick(buttonId) {
+      const xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          console.log(this.responseText);
+        }
+      };
+      xhttp.open('POST', '/button', true);
+      xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+      const value = encodeURIComponent(buttonId);
+      const data = `value=${value}`;
+      xhttp.send(data);
+    }
+  </script>
+</body>
+</html>
